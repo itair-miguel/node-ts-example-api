@@ -4,8 +4,6 @@ import * as express from "express";
 import { Logger } from "./config/Logger";
 import { SetupDB } from "./dal/DBConfig";
 
-const REQUEST_IDENTIFIER = "x-request-id";
-
 /**
  * Represents the Express APP and is responsible for handling most of the APP configuration
  *
@@ -51,7 +49,7 @@ class App {
 
         this.express.use((req, res, next) => {
             if (process.env.NODE_ENV === "development") {
-                res.header("Access-Control-Allow-Origin", "*"); // dev only
+                res.header("Access-Control-Allow-Origin", "*");
             }
             res.header("Access-Control-Allow-Methods", "OPTIONS,PUT,POST");
             res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");

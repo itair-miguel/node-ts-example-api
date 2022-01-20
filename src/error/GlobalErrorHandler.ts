@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { Logger } from "../config/Logger";
 import { EnvelopeResponse } from "../controller/envelope/EnvelopeResponse";
@@ -19,7 +19,7 @@ errorMap.set(AuthenticationError.name, StatusCodes.UNAUTHORIZED);
  * @param res RESPONSE express object
  * @param next NEXT express method to be called
  */
-export const GlobalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
+export const GlobalErrorHandler = (err: any, req: Request, res: Response) => {
     let errorName: string;
     if (Array.isArray(err)) {
         errorName = err[0].constructor.name;
@@ -27,7 +27,7 @@ export const GlobalErrorHandler = (err: any, req: Request, res: Response, next: 
         errorName = err.constructor.name;
     }
     const status: number = errorMap.get(errorName) || err.status || StatusCodes.INTERNAL_SERVER_ERROR;
-    Logger.error(err.message, err.stack ? err.stack : err);
+    Logger.error(err.message, err);
     res.status(status).send(envelope(err));
 };
 

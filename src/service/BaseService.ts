@@ -15,10 +15,6 @@ export abstract class AbstractBaseService<D, C, M extends Model> implements Base
 
     protected repo: BaseRepository<M, C>;
 
-    constructor(repo: BaseRepository<M, C>) {
-        this.repo = repo;
-    }
-
     public async findAll(criteria: Partial<C>): Promise<D[]> {
         return this.repo.findAll(criteria).then((records) => records.map(this.toDTO));
     }

@@ -10,9 +10,16 @@ import { ErrorMessage, ResponseError } from "./ResponseError";
  */
 export class EnvelopeResponse {
 
-    public static createMessage<T>(content: T): Envelope<T> {
+    public static envelope<T>(content: T): Envelope<T> {
         const envelope: Envelope<T> = {
-            data: content,
+            data: content
+        };
+        return envelope;
+    }
+
+    public static envelopeMessage(message: string): Envelope<{ message: string }> {
+        const envelope: Envelope<{ message: string }> = {
+            data: { message },
         };
         return envelope;
     }

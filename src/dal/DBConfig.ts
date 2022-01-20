@@ -1,25 +1,11 @@
-import { Dialect } from "sequelize";
 import { SequelizeOptions, Sequelize } from "sequelize-typescript";
 import { Logger } from "../config/Logger";
 
 export const DBConfig = (): SequelizeOptions => {
     return {
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        dialect: process.env.DB_DIALECT as Dialect,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        dialectOptions: {
-            encrypt: true,
-        },
-        pool: {
-            max: 30,
-            min: 0,
-            idle: 30000,
-            acquire: 30000,
-            evict: 30000,
-        },
-        logging: (msg: any) => Logger.debug(msg),
+        storage: process.env.DB_STORAGE,
+        dialect: "sqlite",
+        logging: (msg: string) => Logger.debug(msg),
     };
 };
 
@@ -33,7 +19,7 @@ class DBInstance implements IDBInstance {
 
 const db: IDBInstance = new DBInstance();
 
-let initialized: boolean = false;
+let initialized = false;
 
 export const SetupDB = (): IDBInstance => {
     if (initialized && db.sequelize != null) {

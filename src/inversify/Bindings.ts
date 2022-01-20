@@ -1,12 +1,9 @@
+import { Guard } from "../auth/Guard";
 import { TYPES } from "../config/Types";
 import { container } from "../inversify.config";
-import { UserRepository, UserRepositoryImpl } from "../repository/UserRepository";
-import { AuthService, AuthServiceImpl } from "../service/AuthService";
-import { Guard } from "../auth/Guard";
+import { ExampleRepository, ExampleRepositoryImpl } from "../repository/ExampleRepository";
+import { ExampleService, ExampleServiceImpl } from "../service/ExampleService";
 
-// controller imports
-import "../controller/ApiAuthDeviceController";
-
-container.bind<Guard>(TYPES.Guard).toSelf();
-container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl);
-container.bind<AuthService>(TYPES.AuthService).to(AuthServiceImpl);
+container.bind<Guard>(TYPES.Guard).to(Guard);
+container.bind<ExampleRepository>(TYPES.ExampleRepository).to(ExampleRepositoryImpl);
+container.bind<ExampleService>(TYPES.ExampleService).to(ExampleServiceImpl);

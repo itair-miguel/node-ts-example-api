@@ -1,15 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { inject, injectable } from "inversify";
-import { TYPES } from "../config/Types";
+import { injectable } from "inversify";
 import { AuthenticationError } from "../error/AuthenticationError";
 import { ERROR_CODE } from "../error/ERROR_CODE";
-import { AuthService } from "../service/AuthService";
 
 @injectable()
 export class Guard {
-
-    @inject(TYPES.AuthService)
-    private service: AuthService;
 
     public async authenticate(req: Request, res: Response, next: NextFunction) {
         const username = req.get("auth-username");
@@ -19,7 +14,7 @@ export class Guard {
             throw new AuthenticationError("Access denied. No credentials provided.", ERROR_CODE.MISSING_CREDENTIALS);
         }
 
-        const user = await this.service.basicAuth(username, pwd);
+        const user = null;
 
         if (!user) {
             throw new AuthenticationError("Access denied. No credentials provided.", ERROR_CODE.INVALID_CREDENTIALS);

@@ -41,7 +41,7 @@ export abstract class AbstractBaseRepository<M extends Model, C> implements Base
         const opts: UpdateOptions = { where };
         // removing any undefined fields as those would be set the DB field to null and we don't want that.
         // nullable DB fields should accept a null value and that value should be informed.
-        Object.keys(model).forEach((key) => (model as any)[key] === undefined && delete (model as any)[key]);
+        Object.keys(model).forEach((key) => (model as never)[key] === undefined && delete (model as never)[key]);
         // This guarantees that PKs are not going to be updated by any in code functionality
         opts.fields = Object.keys(this.MODEL.rawAttributes).filter((key) => this.MODEL.primaryKeyAttributes.indexOf(key) < 0);
 
@@ -67,7 +67,7 @@ export abstract class AbstractBaseRepository<M extends Model, C> implements Base
         const record = await this.MODEL.findOne<M>({ where }).catch((error) => {
             Logger.error(`Error in getOne for the given criteria: ${inspect(criteria)}`);
             throw error;
-        })
+        });
         if (!record) {
             throw new ReferenceError(`No record found for the given criteria: ${inspect(criteria)}`);
         }

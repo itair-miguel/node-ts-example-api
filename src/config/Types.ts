@@ -1,6 +1,6 @@
 export const TYPES = {
-    UserRepository: Symbol("UserRepository"),
-    UserService: Symbol("UserService"),
+    ExampleRepository: Symbol("ExampleRepository"),
+    ExampleService: Symbol("ExampleService"),
     AuthService: Symbol("AuthService"),
     Guard: Symbol("Guard"),
-}
+};
